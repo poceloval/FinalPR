@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование товаров</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Marmelad:400,400i,700,700i,600,600i&amp;display=swap">
+    <link rel="stylesheet" type="text/css" href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="icon" href="https://catherineasquithgallery.com/uploads/posts/2021-03/1614563370_11-p-kofe-na-belom-fone-12.jpg">
+</head>
+<body>
+
+<nav style="background-color: rgb(77,13,0)" class="navbar navbar-light navbar-expand-lg fixed-top clean-navbar">
+    <div class="container">
+        <a class="navbar-brand link-light logo" href="#">Kirilloff Coffee</a>
+        <div id="navcol-1" class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link link-light" th:href="@{/admin}">Админ-панель</a></li>
+                <li class="nav-item"><a class="nav-link link-light" href="/product">Продукция</a></li>
+                <li class="nav-item">
+                    <form method="post" th:action="@{/logout}">
+                        <input  style="border: 0px; background-color: rgb(77,13,0)" class="nav-link link-light" type="submit" value="Выйти из личного кабинета">
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+<div class="col-md-12 col-lg-12">
+    <div class="clean-pricing-item">
+            <div class="container">
+                <div class="block-heading">
+                    <br>
+                    <br>
+                    <br><br>
+                    <h4 style="text-align: center">Редактирование товара  <a style="text-decoration: none" th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a></h4>
+                    <br>
+                </div>
+                <div class="row">
+                    <div class="col-md">
+                        <form
+                               style="text-align: center" th:method="POST" th:action="@{/admin/product/edit/{id}(id=${product.getId()})}" th:object="${product}">
+                            <label for="title">Введите новое наименование товара: </label>
+                            <input class="form-control" type="text" th:field="*{title}" placeholder="Наименование" id="title">
+                            <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+                            <br>
+                            <label for="description">Введите новое описание товара: </label>
+                            <textarea class="form-control" th:field="*{description}" placeholder="Описание" id="description"></textarea>
+                            <div style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+                            <br>
+                            <label for="price">Введите новую цену товара: </label>
+                            <input class="form-control" type="number" th:field="*{price}" min="1" step="0.00" id="price">
+                            <div style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+                            <br>
+                            <label for="warehouse">Введите новый склад: </label>
+                            <input class="form-control" type="text" th:field="*{warehouse}" placeholder="Склад" id="warehouse">
+                            <div style="color: red" th:if="${#fields.hasErrors('warehouse')}" th:errors="*{warehouse}"></div>
+                            <br>
+                            <label for="seller">Введите новые данные о продавце: </label>
+                            <textarea class="form-control" th:field="*{seller}" placeholder="Продавец" id="seller"></textarea>
+                            <div style="color: red" th:if="${#fields.hasErrors('seller')}" th:errors="*{seller}"></div>
+                            <br>
+                            <label for="category">Введите новую категорию товара: </label>
+                            <select class="form-control" name="category" th:field="*{category}" id="category">
+                                <div th:each="element : ${category}">
+                                    <option th:text="${element.getName()}" th:value="${element.getId()}"></option>
+                                </div>
+                            </select>
+                            <div>
+                                <br>
+                            <input class="btn btn-outline-primary d-block w-100" role="button" type="submit" value="Редактировать">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+<footer class="text-center py-4">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-lg-3">
+            <div class="col">
+                <p class="text-muted my-2">Kirilloff Coffee © 2022</p>
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="../../static/js/bootstrap.min.js"></script>
+</body>
+</html>

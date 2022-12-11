@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница пользователя</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Marmelad:400,400i,700,700i,600,600i&amp;display=swap">
+    <link rel="stylesheet" type="text/css" href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="icon" href="https://catherineasquithgallery.com/uploads/posts/2021-03/1614563370_11-p-kofe-na-belom-fone-12.jpg">
+</head>
+<nav style="background-color: rgb(77,13,0)" class="navbar navbar-light navbar-expand-lg fixed-top clean-navbar">
+    <div class="container">
+        <a class="navbar-brand link-light logo" href="#">Kirilloff Coffee</a>
+        <div id="navcol-1" class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link link-light" th:href="@{/admin}">Админ-панель</a></li>
+                <li class="nav-item">
+                    <form method="post" th:action="@{/logout}">
+                        <input  style="border: 0px; background-color: rgb(77,13,0)" class="nav-link link-light" type="submit" value="Выйти из личного кабинета">
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br><br><br><br><br>
+<body>
+<h1>Страница пользователя</h1>
+<hr>
+<div>
+    <form th:method="POST" th:action="@{/person/{id}(id=${personEdit.getId()})}" th:object="${personEdit}">
+        <div th:each="person : ${personEdit}">
+            <div th:if="${#strings.contains(#authentication.principal.authorities,'ROLE_ADMIN')}">
+                <label>Текущая роль пользователя:
+                    <select class="input_space options" th:field="*{role}" name="role" id="role">
+                        <option disabled selected th:value="${person.getRole()}"></option>
+                        <option th:value="ROLE_ADMIN">Администратор</option>
+                        <option th:value="ROLE_USER">Пользователь</option>
+                    </select>
+                </label><br>
+            </div>
+            <br>
+            <input class="add_btn" type="submit" value="Сохранить"/><br><br>
+            <a th:href="@{/persons}" class="add_btn">Вернуться к списку</a>
+        </div>
+    </form>
+</div>
+<script src="../../static/js/bootstrap.min.js"></script>
+</body>
+</html>

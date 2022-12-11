@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная страница</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Marmelad:400,400i,700,700i,600,600i&amp;display=swap">
+    <link rel="stylesheet" type="text/css" href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="icon" href="https://catherineasquithgallery.com/uploads/posts/2021-03/1614563370_11-p-kofe-na-belom-fone-12.jpg">
+  </head>
+<body>
+
+<nav style="background-color: rgb(77,13,0)" class="navbar navbar-light navbar-expand-lg fixed-top clean-navbar">
+    <div class="container">
+        <a class="navbar-brand link-light logo" th:href="@{/index}">Kirilloff Coffee</a>
+        <div id="navcol-1" class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                <form method="get" th:action="@{/cart}">
+                    <input style="border: 0px; background-color: rgb(77,13,0)" class="nav-link link-light" type="submit" value="Корзина">
+                </form>
+                </li>
+                <li class="nav-item">
+                <form method="get" th:action="@{/orders}">
+                    <input style="border: 0px; background-color: rgb(77,13,0)" class="nav-link link-light" type="submit" value="История заказов">
+                </form>
+                </li>
+                <li class="nav-item">
+                    <form method="post" th:action="@{/logout}">
+                        <input  style="border: 0px; background-color: rgb(77,13,0)" class="nav-link link-light" type="submit" value="Переход на страницу входа">
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<br> <br>
+
+<section class="clean-block clean-pricing dark">
+    <div class="container">
+        <div class="block-heading">
+            <h2 class="text-info"><span style="color: rgb(0, 0, 0);">Главная страница</span></h2>
+            <p style="max-width: 600px;">В нашем магазине вы можете попробовать разные виды кофейных напитков, указанные ниже. К тому же по вашему желанию, вы можете воспользоваться сортировкой</p>
+        </div>
+
+
+
+
+        <form th:method="POST" th:action="@{/product/search}">
+            <div style="font-size: 12px; text-align: center">
+            <fieldset>
+                <legend>Выберите параметр для сортировки: </legend>
+                <br>
+                <label style="font-weight: bold" for="search">Поиск по наименованию:</label>
+                <input name="search" id="search">
+                <label for="ot">;</label>
+                <label style="font-weight: bold" for="ot">   Цена, ₽:</label>
+                <label for="ot">От</label>
+                <input type="text" name="ot" id="ot">
+                <label for="do">До</label>
+                <input type="text" name="do" id="do">
+                <br> <br>
+                <div>
+                    <label style="font-weight: bold" for="ascending_price">Сортировка по цене:</label>
+                    <label for="ascending_price">По возрастанию цены</label>
+                    <input type="radio" id="ascending_price" name="price" value="sorted_by_ascending_price">
+
+                    <label for="descending_price">; По убыванию цены</label>
+                    <input type="radio" id="descending_price" name="price" value="sorted_by_descending_price">
+                    <br> <br>
+                    <label style="font-weight: bold" for="CoffeeWithMilk"> Категория товаров: </label>
+                    <label for="CoffeeWithMilk">Кофе с молоком</label>
+                    <input type="radio" id="CoffeeWithMilk" name="contact" value="CoffeeWithMilk">
+                    <label for="PureСoffee">; Кофе без добавок</label>
+                    <input type="radio" id="PureСoffee" name="contact" value="PureСoffee">
+                    <br> <br>
+                    <input type="submit" value="Найти">
+                </div>
+            </fieldset>
+            </div>
+            <br>
+        </form>
+
+
+
+
+        <h3 style="text-align: center">Кофе на ваш выбор:</h3>
+
+        <div class="container">
+            <div class="row row-cols-3 id = bl2">
+                <div th:each="product : ${products} ">
+                    <div class="container id= form-b">
+                        <div class="row row-cols-1  id = bl2_R">
+                            <div class="heading">
+                                <br>
+                                <h4 style="text-align: center"> <a style="text-decoration: none" th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a></h4>
+                            </div>
+                            <p style="font-size: 14px; text-align: center" th:text="${product.getDescription()}"></p>
+                            <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
+                            <div class="price">
+                                <br>
+                                <h4 style="text-align: center; color: rgb(77,13,0)" th:text="${product.getPrice()} +'₽'"></h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form>
+                        <a  class="btn btn-outline-primary d-block w-100" th:href="@{/cart/add/{id}(id=${product.getId()})}">Добавить в корзину</a>
+                    </form>
+                    <br>
+                    <br>
+                </div>
+                <br>
+            </div>
+
+        </div>
+    </div>
+    </div>
+</section>
+<footer class="text-center py-4">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-lg-3">
+            <div class="col">
+                <p class="text-muted my-2">Kirilloff Coffee © 2022</p>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="../../static/js/bootstrap.min.js"></script>
+</body>
+</html>

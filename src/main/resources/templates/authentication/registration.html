@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Marmelad:400,400i,700,700i,600,600i&amp;display=swap">
+    <link rel="stylesheet" type="text/css" href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="icon" href="https://catherineasquithgallery.com/uploads/posts/2021-03/1614563370_11-p-kofe-na-belom-fone-12.jpg">
+</head>
+<body style="background-color: #f6f6f6;">
+
+<nav style="background-color: rgb(77,13,0)" class="navbar navbar-light navbar-expand-lg fixed-top clean-navbar">
+    <div class="container">
+        <a class="navbar-brand link-light logo" th:href="@{/index}">Kirilloff Coffee</a>
+        <div id="navcol-1" class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link link-light" href="/product">Продукция</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<br><br>
+
+<section class="clean-block clean-form dark">
+
+    <div class="container">
+        <div class="block-heading">
+            <h2><span style="color: rgb(0, 0, 0);">Регистрация</span></h2>
+        </div>
+        <form style="border: 2px solid rgb(77,13,0)" method="post" th:action="@{/authentication/registration}" th:object="${person}">
+            <div class="mb-3">
+                <label class="form-label" for="username">Введите логин: </label><br>
+                <input class="form-control" type="text" th:field="*{login}" placeholder="Введите ваш логин" name="username" id="username">
+                <div style="color: red" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="password">Введите пароль: </label>
+                <input class="form-control" type="password" th:field="*{password}" placeholder="Введите ваш пароль" name="password" id="password">
+                <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                <br>
+
+                <div class="mb-3">
+                    <input class="btn btn-outline-primary d-block w-100" type="submit" value="Зарегистрироваться">
+                    <div th:if="${param.error}" style="color: red">
+                        Неправильный логин или пароль
+                    </div>
+                </div>
+        </form>
+        <a class="btn btn-outline-primary d-block w-100" href="/authentication/login">Уже зарегистрирован</a>
+    </div>
+</section>
+
+<br><br> <br><br><br><br><br><br>
+
+<footer class="text-center py-4">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-lg-3">
+            <div class="col">
+                <p class="text-muted my-2">Kirilloff Coffee © 2022</p>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="../../static/js/bootstrap.min.js"></script>
+</body>
+</html>

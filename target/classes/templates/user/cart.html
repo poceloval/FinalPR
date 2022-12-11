@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Корзина товаров</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Marmelad:400,400i,700,700i,600,600i&amp;display=swap">
+    <link rel="stylesheet" type="text/css" href="../../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
+    <link rel="icon" href="https://catherineasquithgallery.com/uploads/posts/2021-03/1614563370_11-p-kofe-na-belom-fone-12.jpg">
+</head>
+<body>
+<nav style="background-color: rgb(77,13,0)" class="navbar navbar-light navbar-expand-lg fixed-top clean-navbar">
+    <div class="container">
+        <a class="navbar-brand link-light logo" href="#">Kirilloff Coffee</a>
+        <div id="navcol-1" class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <form method="get" th:action="@{/product}">
+                        <input style="border: 0px; background-color: rgb(77,13,0)" class="nav-link link-light" type="submit" value="Продукты">
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form method="get" th:action="@{/orders}">
+                        <input style="border: 0px; background-color: rgb(77,13,0)" class="nav-link link-light" type="submit" value="История заказов">
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <form method="post" th:action="@{/logout}">
+                        <input  style="border: 0px; background-color: rgb(77,13,0)" class="nav-link link-light" type="submit" value="Переход на страницу входа">
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<br> <br>
+
+<section class="clean-block clean-pricing dark">
+    <div class="container">
+        <div class="block-heading">
+            <h2 class="text-info"><span style="color: rgb(0, 0, 0);">Корзина товаров</span></h2>
+            <h3 th:text="'Итоговая цена: ' + ${price}"></h3>
+            <form>
+                <a  class="btn btn-outline-primary d-block w-100" href="/order/create">Оформить заказ</a>
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row row-cols-3 id = bl2">
+            <div th:each="product : ${cart_product}">
+                <div class="container id= form-b">
+                    <div class="row row-cols-1  id = bl2_R">
+                        <div class="heading">
+                            <br>
+                            <h4 style="text-align: center"> <a style="text-decoration: none" th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a></h4>
+                        </div>
+                        <p style="font-size: 14px; text-align: center" th:text="${product.getDescription()}"></p>
+                        <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
+                        <div class="price">
+                            <br>
+                            <h4 style="text-align: center; color: rgb(77,13,0)" th:text="${product.getPrice()} +'₽'"></h4>
+                        </div>
+                        <form>
+                            <a  class="btn btn-outline-primary d-block w-100" th:href="@{/cart/delete/{id}(id=${product.getId()})}">Удалить</a>
+                        </form>
+                    </div>
+                </div>
+                            <br>
+                <br>
+            </div>
+            <br>
+        </div>
+    </div>
+
+
+
+
+
+</section>
+<footer class="text-center py-4">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-lg-3">
+            <div class="col">
+                <p class="text-muted my-2">Kirilloff Coffee © 2022</p>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="../../static/js/bootstrap.min.js"></script>
+</body>
+</html>

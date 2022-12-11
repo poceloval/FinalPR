@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:each="order : ${orderall}">
+    <div class="heading">
+        <h4>  <p style="color: rgb(77,13,0)" th:text="'Заказ № ' + ${order.getNumber()}"></p> </h4>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md">
+                <p th:text="'Наименование: ' + ${order.getProduct().getTitle()}"></p>
+                <p th:text="'Количество: ' + ${order.getCount()}"></p>
+                <p th:text="'Цена: ' + ${order.getPrice()}"></p>
+                <p th:text="'Дата заказа: ' + ${#temporals.format(order.getDateTime(), 'dd-MMM-yyyy')}"></p>
+                <p th:text="'Статус: ' + ${order.getStatus()}">
+            </div>
+            <div class="col-sm" >
+                <div STYLE=" padding-left: 30% ">
+                    <img th:src="'/img/' + ${order.getProduct().imageList[0].getFileName()}" width="300px">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
